@@ -32,7 +32,11 @@ const commentSchema = new Schema<IComment>({
         }
     },
     date: { type: Date, required: true, default: Date.now },
-});
+},
+{
+    timestamps: true,
+},
+);
 
 const Comment = model<IComment>('Comment', commentSchema);
 export default Comment;
