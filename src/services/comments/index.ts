@@ -25,6 +25,7 @@ export const listCommentsByArticleId = async (
     const comments = await Comment
         .find({
             articleId,
+            deletedAt: null,
         })
         .skip(from)
         .limit(size);
@@ -36,7 +37,7 @@ export const countCommentsByArticleId = async (
     articleIds: string[]
 ): Promise<CommentCountResponseDto> => {
     const commentCounts = await Comment.aggregate([
-        { $match: { articleId: { $in: articleIds } } },
+        { $match: { articleId: { $in: articleIds }, deletedAt: null } },
         { $group: { _id: "$articleId", count: { $sum: 1 } } }
     ]);
 
@@ -51,12 +52,14 @@ export const countCommentsByArticleId = async (
 };
 
 const toCommentDto = (comment: IComment): CommentDto => {
-    const {_id, text, author, articleId, date} = comment;
+    const {_id, text, author, articleId, createdAt, updatedAt, deletedAt } = comment;
     return {
         _id,
         text,
         author,
         articleId,
-        date
+        createdAt,
+        updatedAt,
+        deletedAt,
     }
 }
