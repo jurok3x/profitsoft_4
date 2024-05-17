@@ -53,7 +53,8 @@ export const findCommentsCount = async (req: Request, res: Response) => {
         const { body } = req;
         const { articleIds } = body;
         if (!Array.isArray(articleIds) || !articleIds.every(id => typeof id === 'string')) {
-            return res.status(httpStatus.BAD_REQUEST).send({ message: 'Invalid articleIds format. Must be an array of strings.' });
+            res.status(httpStatus.BAD_REQUEST).send({ message: 'Invalid articleIds format. Must be an array of strings.' });
+            return;
         }
 
         const comments = await countCommentsByArticleId(articleIds);

@@ -5,7 +5,9 @@ export interface IComment extends Document {
 	text: string;
     author: string;
     articleId: string;
-	date: Date;
+	createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
 }
 
 const commentSchema = new Schema<IComment>({
@@ -31,7 +33,7 @@ const commentSchema = new Schema<IComment>({
             message: props => `${props.value} is not a valid UUID`
         }
     },
-    date: { type: Date, required: true, default: Date.now },
+    deletedAt: { type: Date, required: false, default: null },
 },
 {
     timestamps: true,
