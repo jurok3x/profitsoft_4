@@ -8,14 +8,14 @@ export const comments = [
         text: "Great!",
         author: "John Doe",
         articleId: "7f94d3da-a46a-4a90-a3d3-edbe4311dd83",
-        date: new Date(),
+        deletedAt: null,
     }),
     new Comment({
         _id: new ObjectId(),
         text: "Nice!",
         author: "Keanu Reeves",
         articleId: "7f94d3da-a46a-4a90-a3d3-edbe4311dd83",
-        date: new Date(),
+        deletedAt: null,
     }),
 ];
 
