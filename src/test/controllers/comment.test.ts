@@ -5,6 +5,7 @@ import express from 'express';
 import { ObjectId } from 'mongodb';
 import sinon from 'sinon';
 import routers from 'src/routers/comments';
+import mongoSetup from '../mongoSetup';
 
 const { expect } = chai;
 
@@ -19,12 +20,15 @@ app.use(bodyParser.json({ limit: '1mb' }));
 app.use('/', routers);
 
 describe('Comment controller', () => {
+    before(async () => {
+        await mongoSetup;
+    });
     afterEach(() => {
         sandbox.restore();
     });
     
     it('should list the comments', (done) => {
-        const comments = [
+        const response = [
             {
                 _id: new ObjectId(),
                 text: 'Great!',
@@ -40,15 +44,13 @@ describe('Comment controller', () => {
                 date: new Date(),
             },
         ];
-    
-        
-    
+
         chai.request(app)
             .get('')
             .query({articleId :'7f94d3da-a46a-4a90-a3d3-edbe4311dd83'})
             .end((_, res) => {
                 res.should.have.status(200);
-                expect(res.body).to.deep.equal(comments);
+                expect(res.body).to.deep.equal(response);
         
                 done();
             });

@@ -1,5 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose, { ConnectOptions } from 'mongoose';
+import { seed } from './config/commentsConfig';
 
 const mongoServer = new MongoMemoryServer();
 
@@ -28,6 +29,9 @@ const connectionPromise = new Promise((resolve, reject) => {
       });
 
       return null;
+    })
+    .then(async () => {
+        await seed();
     })
     .catch((err) => {
       console.error('Error in prepareStorage');

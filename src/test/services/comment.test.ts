@@ -1,36 +1,20 @@
 import chai from 'chai';
-import { ObjectId } from 'mongodb';
 import sinon from 'sinon';
-import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto';
+import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto.type';
 import Comment from 'src/model/comment';
 import * as commentService from 'src/services/comments';
+import { comments } from '../config/commentsConfig';
 import mongoSetup from '../mongoSetup';
 
 const { expect } = chai;
 
 const sandbox = sinon.createSandbox();
 
-const comment1 = new Comment({
-    _id: new ObjectId(),
-    text: 'Great!',
-    author: 'John Doe',
-    articleId: '7f94d3da-a46a-4a90-a3d3-edbe4311dd83',
-    date: new Date(),
-});
-
-const comment2 = new Comment({
-    _id: new ObjectId(),
-    text: 'Nice!',
-    author: 'Keanu Reeves',
-    articleId: '7f94d3da-a46a-4a90-a3d3-edbe4311dd83',
-    date: new Date(),
-});
+const data = comments;
 
 describe('Comment Service', () => {
     before(async () => {
         await mongoSetup;
-        await comment1.save();
-        await comment2.save();
     });
 
     afterEach(async () => {
@@ -44,6 +28,8 @@ describe('Comment Service', () => {
             articleId: '7f94d3da-a46a-4a90-a3d3-edbe4311dd83',
         }
         let createdCommentId: string;
+        const articleExistsStub = sandbox.stub(commentService, 'checkArticleExists');
+        articleExistsStub.resolves(true);
 
         commentService.saveComment(saveRequest)
             .then(comment => {
@@ -65,7 +51,7 @@ describe('Comment Service', () => {
     });
 
     it('findComment should return valid comments', (done) => {
-        const { articleId } = comment1;
+        const { articleId } = data[0];
         const size = 10;
         const from = 0;
         commentService.listCommentsByArticleId({ articleId, size, from })
@@ -88,7 +74,7 @@ describe('Comment Service', () => {
     });
 
     it('findCommentCount should return correct count', (done) => {
-        const { articleId: firstArticleId } = comment1;
+        const { articleId: firstArticleId } = data[0];
         const secondArticleId = '7f94d3da-a46a-4a90-a3d3-edbe4311dd82';
         const articleIds = [firstArticleId, secondArticleId];
         commentService.countCommentsByArticleId(articleIds)
