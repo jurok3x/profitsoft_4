@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import log4js from 'log4js';
-import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto';
+import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto.type';
 import {
     countCommentsByArticleId,
     listCommentsByArticleId,
