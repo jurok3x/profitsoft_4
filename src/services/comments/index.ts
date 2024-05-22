@@ -1,14 +1,23 @@
-import type { CommentCountResponseDto } from 'src/dto/comment/commentCountResponseDto';
-import type { CommentDto } from 'src/dto/comment/commentDto';
-import type { CommentListRequestDto } from 'src/dto/comment/commentListRequestDto';
-import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto';
+import axios from 'axios';
+import type { CommentCountResponseDto } from 'src/dto/comment/commentCountResponseDto.type';
+import type { CommentDto } from 'src/dto/comment/commentDto.type';
+import type { CommentListRequestDto } from 'src/dto/comment/commentListRequestDto.type';
+import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto.type';
 import Comment, { type IComment } from 'src/model/comment';
+
+const ARTICLE_API_URL = 'http://localhost:8080/api/v1/articles'; 
 
 export const saveComment = async ({
     text,
     author,
     articleId,
 }: CommentSaveDto): Promise<IComment> => {
+    const articleExists = await checkArticleExists(articleId);
+
+    if (!articleExists) {
+        throw new Error(`Article with ID ${articleId} does not exist.`);
+    }
+
     const comment = await new Comment({
         text,
         author,
@@ -28,7 +37,8 @@ export const listCommentsByArticleId = async (
             deletedAt: null,
         })
         .skip(from)
-        .limit(size);
+        .limit(size)
+        .sort('createdAt');
 
     return comments.map(comment => toCommentDto(comment));
 };
@@ -63,3 +73,13 @@ const toCommentDto = (comment: IComment): CommentDto => {
         deletedAt,
     }
 }
+
+export const checkArticleExists = async (articleId: string): Promise<boolean> => {
+    try {
+        const response = await axios.get(`${ARTICLE_API_URL}/${articleId}`);
+        return response.status === 200;
+    } catch (error) {
+        console.log(JSON.stringify(error))
+        return false;
+    }
+};
