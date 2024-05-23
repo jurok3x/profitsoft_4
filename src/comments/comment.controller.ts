@@ -47,12 +47,12 @@ class CommentController {
         }
     };
 
-    private handleError(res: Response, err: Error) {
+    private handleError(res: Response, err: unknown) {
         if (err instanceof InternalError) {
             const { message, status } = err;
             res.status(status).send({ message });
         } else {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message || 'Internal server error.');
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Internal server error.');
         }
     }
 
