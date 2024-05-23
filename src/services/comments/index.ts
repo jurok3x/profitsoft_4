@@ -1,9 +1,9 @@
 import axios from 'axios';
-import type { CommentCountResponseDto } from 'src/dto/comment/commentCountResponseDto.type';
-import type { CommentDto } from 'src/dto/comment/commentDto.type';
-import type { CommentListRequestDto } from 'src/dto/comment/commentListRequestDto.type';
-import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto.type';
-import Comment, { type IComment } from 'src/model/comment';
+import Comment, { type IComment } from 'src/comments/comment.model';
+import type { CommentCountResponseDto } from 'src/comments/types/commentCountResponseDto.type';
+import type { CommentDto } from 'src/comments/types/commentDto.type';
+import type { CommentListRequestDto } from 'src/comments/types/commentListRequestDto.type';
+import type { CommentSaveDto } from 'src/comments/types/commentSaveDto.type';
 
 const ARTICLE_API_URL = 'http://localhost:8080/api/v1/articles'; 
 

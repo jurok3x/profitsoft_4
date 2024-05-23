@@ -1,15 +1,15 @@
-import log4js from 'log4js';
-import httpStatus from 'http-status';
 import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import log4js from 'log4js';
+import { StudentQueryDto } from 'src/comments/types/studentQueryDto';
+import { StudentSaveDto } from 'src/comments/types/studentSaveDto';
 import {
-  createStudent as createStudentApi,
-  getStudent as getStudentApi,
-  listStudentsByGroupId as listStudentsByGroupIdApi,
-  search as searchApi,
-  updateStudent as updateStudentApi,
+	createStudent as createStudentApi,
+	getStudent as getStudentApi,
+	listStudentsByGroupId as listStudentsByGroupIdApi,
+	search as searchApi,
+	updateStudent as updateStudentApi,
 } from 'src/services/student';
-import { StudentQueryDto } from 'src/dto/student/studentQueryDto';
-import { StudentSaveDto } from 'src/dto/student/studentSaveDto';
 import { InternalError } from 'src/system/internalError';
 
 export const getStudent = async (req: Request, res: Response) => {

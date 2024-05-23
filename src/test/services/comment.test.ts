@@ -1,8 +1,8 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import type { CommentSaveDto } from 'src/dto/comment/commentSaveDto.type';
+import Comment from 'src/comments/comment.model';
+import type { CommentSaveDto } from 'src/comments/types/commentSaveDto.type';
 import type { HttpError } from 'src/dto/error/httpError';
-import Comment from 'src/model/comment';
 import * as commentService from 'src/services/comments';
 import { comments } from '../config/commentsConfig';
 

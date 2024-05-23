@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
+import { StudentDetailsDto } from 'src/comments/types/studentDetailsDto';
+import { StudentInfoDto } from 'src/comments/types/studentInfoDto';
+import { StudentQueryDto } from 'src/comments/types/studentQueryDto';
+import { StudentSaveDto } from 'src/comments/types/studentSaveDto';
 import Group from 'src/model/group';
 import Student, { IStudent } from 'src/model/student';
-import { StudentSaveDto } from 'src/dto/student/studentSaveDto';
-import { StudentDetailsDto } from 'src/dto/student/studentDetailsDto';
-import { StudentInfoDto } from 'src/dto/student/studentInfoDto';
-import { StudentQueryDto } from 'src/dto/student/studentQueryDto';
 
 export const createStudent = async (
   studentDto: StudentSaveDto

@@ -1,12 +1,12 @@
 import chai from 'chai';
-import sinon from 'sinon';
 import { ObjectId } from 'mongodb';
-import mongoSetup from '../mongoSetup';
-import Student from 'src/model/student';
+import sinon from 'sinon';
+import { StudentQueryDto } from 'src/comments/types/studentQueryDto';
+import { StudentSaveDto } from 'src/comments/types/studentSaveDto';
 import Group from 'src/model/group';
-import { StudentSaveDto } from 'src/dto/student/studentSaveDto';
-import { StudentQueryDto } from 'src/dto/student/studentQueryDto';
+import Student from 'src/model/student';
 import * as studentService from 'src/services/student';
+import mongoSetup from '../mongoSetup';
 
 const { expect } = chai;
 
