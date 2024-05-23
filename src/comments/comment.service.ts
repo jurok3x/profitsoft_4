@@ -1,4 +1,6 @@
+import httpStatus from 'http-status';
 import type { IArticleClient } from '../client/interfaces/IArticleClient';
+import { InternalError } from '../system/internalError';
 import type { IComment } from "./comment.model.ts";
 import type { ICommentRepo } from "./interfaces/ICommentRepo";
 import type { ICommentService } from "./interfaces/ICommentService";
@@ -34,17 +36,32 @@ class CommentService implements ICommentService {
         const articleExists = await this.articleClient.checkArticleExists(articleId);
 
         if (!articleExists) {
-            throw new Error(`Article with ID ${articleId} does not exist.`);
+            throw new InternalError({
+                    message: `Article with ID ${articleId} does not exist`,
+                    status: httpStatus.BAD_REQUEST
+                });
         }
 
-        const comment = await this.commentRepository.save(request);
+        try {
+            const comment = await this.commentRepository.save(request);
 
-        return this.toCommentDto(comment);
+            return this.toCommentDto(comment);
+        } catch (err) {
+            const error = err as Error;
+            throw new InternalError({
+                message: error.message,
+                status: httpStatus.BAD_REQUEST
+            });
+        }
+        
     }
     
     public async getCount({ articleIds }: CommentCountRequestDto): Promise<CommentCountResponseDto> {
         if (!Array.isArray(articleIds) || !articleIds.every(id => typeof id === 'string')) {
-            throw new Error('Invalid articleIds format. Must be an array of strings.');
+            throw new InternalError({
+                message: 'Invalid articleIds format. Must be an array of strings.',
+                status: httpStatus.BAD_REQUEST
+            });
         }
 
         const commentCounts = await this.commentRepository.getCount({ articleIds });
