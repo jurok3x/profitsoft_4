@@ -1,14 +1,11 @@
 import express from 'express';
-import {
-  findCommentsByArticleId,
-  findCommentsCount,
-  saveComment,
-} from 'src/controllers/comments';
+import { commentController } from '../../comments/comment';
+
 
 const router = express.Router();
 
-router.post('', saveComment);
-router.post('/_counts', findCommentsCount);
-router.get('', findCommentsByArticleId);
+router.post('', commentController.saveComment);
+router.post('/_counts', commentController.findCommentsCount);
+router.get('', commentController.findCommentsByArticleId);
 
 export default router;
