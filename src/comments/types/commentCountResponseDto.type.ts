@@ -1,0 +1,1 @@
+export type CommentCountResponseDto = Record<string, number>;

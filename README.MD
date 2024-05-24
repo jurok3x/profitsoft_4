@@ -18,6 +18,9 @@ Thus, when the containers are restarted, data will not be lost.
 
 # Configuration
 
+!!!IMPORTANT
+To run in dev mode add **ARTICLE_API_URL** to consul.
+
 If for some reason consul kv's were not added, and you need to add it manually:
 
 Open consul ui (by default `localhost:8501`)
