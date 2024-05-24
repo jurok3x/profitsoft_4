@@ -21,7 +21,7 @@ class CommentRepository implements ICommentRepo {
             })
             .skip(from)
             .limit(size)
-            .sort('createdAt');
+            .sort({ createdAt: -1 });
     
         return comments;
     }
