@@ -7,9 +7,9 @@ import type {
 } from "../types/types.ts";
 
 export interface ICommentService {
-    findByArticleId(data: FindByArticleIdRequestDto): Promise<CommentDto[] | null>;
+    findByArticleId(data: FindByArticleIdRequestDto): Promise<CommentDto[]>;
     save(
         request: CommentSaveDto,
     ): Promise<CommentDto>;
-    getCount(data: CommentCountRequestDto): Promise<CommentCountResponseDto | null>;
+    getCount(data: CommentCountRequestDto): Promise<CommentCountResponseDto>;
 }
