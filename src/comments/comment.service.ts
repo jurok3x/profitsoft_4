@@ -22,9 +22,12 @@ class CommentService implements ICommentService {
         articleId,
         from,
         size,
-    }: FindByArticleIdRequestDto): Promise<CommentDto[] | null> {
+    }: FindByArticleIdRequestDto): Promise<CommentDto[]> {
         if (!articleId) {
-            return null;
+            throw new InternalError({
+                message: `Article ID must be defined.`,
+                status: httpStatus.BAD_REQUEST
+            });
         }
     
         const comments = await this.commentRepository.findByArticleId({ articleId, from, size });
@@ -34,7 +37,6 @@ class CommentService implements ICommentService {
     public async save(request: CommentSaveDto): Promise<CommentDto> {
         const { articleId } = request;
         const articleExists = await this.articleClient.checkArticleExists(articleId);
-
         if (!articleExists) {
             throw new InternalError({
                     message: `Article with ID ${articleId} does not exist`,
