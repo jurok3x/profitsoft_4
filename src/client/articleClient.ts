@@ -14,7 +14,7 @@ class ArticleClient implements IArticleClient {
             if (String(process.env.NODE_ENV).trim() === 'dev') {
                 env = 'dev';
             }
-            const articleApiUrl = getConsulValue(`${env}/ARTICLE_API_URL`);
+            const articleApiUrl = await getConsulValue(`${env}/ARTICLE_API_URL`);
             
             if (!articleApiUrl) {
                 throw new Error('ARTICLE_API_URL is not initialized');
