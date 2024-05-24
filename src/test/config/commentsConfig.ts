@@ -1,6 +1,6 @@
 import log4js from 'log4js';
 import { ObjectId } from "mongodb";
-import Comment from "src/model/comment";
+import Comment from "src/comments/comment.model";
 
 export const comments = [
     new Comment({
